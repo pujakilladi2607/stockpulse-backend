@@ -94,4 +94,15 @@ public class ProductController {
             return "Error adding products";
         }
     }
+
+    @GetMapping("/test-db")
+public String testDB() {
+    try {
+        productRepository.findAll();
+        return "DB Connected ✅";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "DB NOT Connected ❌";
+    }
+}
 }
