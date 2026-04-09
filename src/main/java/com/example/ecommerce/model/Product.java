@@ -11,13 +11,15 @@ public class Product {
 
     private String name;
     private double price;
-    private int stock;   // ✅ This is your inventory field
+    private int stock;
     private String description;
     private String category;
     private String image;
 
+    // ✅ Default constructor (required)
     public Product() {}
 
+    // ✅ Parameterized constructor
     public Product(String name, double price, int stock, String description, String category, String image) {
         this.name = name;
         this.price = price;
@@ -27,23 +29,55 @@ public class Product {
         this.image = image;
     }
 
-    public String getId() { return id; }
+    // ✅ Getter for ID (IMPORTANT)
+    public String getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    // ✅ Setter for ID (ADD THIS 🔥)
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public int getStock() {
+        return stock;
+    }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String getImage() { return image; }
-    public void setImage(String image) { this.image = image; }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
