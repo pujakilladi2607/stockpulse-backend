@@ -11,13 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/orders")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS
-})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OrderController {
 
     @Autowired
@@ -30,8 +24,6 @@ public class OrderController {
     @PostMapping
     public String placeOrder(@RequestBody Order order) {
 
-        System.out.println("🔥 ORDER RECEIVED: " + order);
-
         double total = 0;
 
         for (OrderItem item : order.getItems()) {
@@ -39,7 +31,7 @@ public class OrderController {
             Optional<Product> optionalProduct = productRepository.findById(item.getProductId());
 
             // ❌ Product not found
-            if (!optionalProduct.isPresent()) {
+            if (optionalProduct.isEmpty()) {
                 return "Product not found with ID: " + item.getProductId();
             }
 
@@ -56,23 +48,17 @@ public class OrderController {
             }
 
             // ✅ Reduce stock
-            int updatedStock = product.getStock() - item.getQuantity();
-            product.setStock(updatedStock);
+            product.setStock(product.getStock() - item.getQuantity());
             productRepository.save(product);
 
             // ✅ Calculate total
             total += product.getPrice() * item.getQuantity();
         }
 
-        // ✅ Set order details
         order.setTotalAmount(total);
         order.setStatus("PLACED");
 
-        System.out.println("✅ USER EMAIL: " + order.getUserEmail());
-
         Order savedOrder = orderRepository.save(order);
-
-        System.out.println("💾 SAVED ORDER: " + savedOrder);
 
         return "Order placed successfully. Order ID: " + savedOrder.getId();
     }
@@ -83,22 +69,30 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-    // 🔍 Get single order
+    // 🔍 Get order by ID
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable String id) {
-        return orderRepository.findById(id).orElse(null);
-    }
+    public Object getOrderById(@PathVariable String id) {
 
-    // 🔄 Update order status
-    @PutMapping("/{id}")
-    public String updateStatus(@PathVariable String id, @RequestParam String status) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
 
-        Order order = orderRepository.findById(id).orElse(null);
-
-        if (order == null) {
+        if (optionalOrder.isEmpty()) {
             return "Order not found";
         }
 
+        return optionalOrder.get();
+    }
+
+    // 🔄 Update status
+    @PutMapping("/{id}")
+    public String updateStatus(@PathVariable String id, @RequestParam String status) {
+
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+
+        if (optionalOrder.isEmpty()) {
+            return "Order not found";
+        }
+
+        Order order = optionalOrder.get();
         order.setStatus(status);
         orderRepository.save(order);
 

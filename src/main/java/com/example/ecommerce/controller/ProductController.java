@@ -25,34 +25,21 @@ public class ProductController {
     // 📄 Get All Products
     @GetMapping
     public List<Product> getAllProducts() {
-        try {
-            return productRepository.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of(); // return empty instead of crashing
-        }
+        return productRepository.findAll();
     }
 
     // ❌ Delete Product
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable String id) {
-        try {
-            productRepository.deleteById(id);
-            return "Product deleted";
-        } catch (Exception e) {
-            return "Error deleting product";
-        }
+        productRepository.deleteById(id);
+        return "Product deleted";
     }
 
-    // ❌ Delete ALL Products
-    @GetMapping("/delete-all")
+    // ❌ Delete ALL Products (FIXED)
+    @DeleteMapping("/delete-all")
     public String deleteAllProducts() {
-        try {
-            productRepository.deleteAll();
-            return "All products deleted";
-        } catch (Exception e) {
-            return "Error deleting all products";
-        }
+        productRepository.deleteAll();
+        return "All products deleted";
     }
 
     // ✏️ Update Product
@@ -70,39 +57,33 @@ public class ProductController {
 
             return productRepository.save(product);
 
-        }).orElse(null);
+        }).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     // 🔥 Add Sample Products
     @GetMapping("/add-sample")
     public String addSampleProducts() {
+
+        productRepository.save(new Product("Running Shoes", 999, 10, "Shoes", "Footwear",
+                "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"));
+
+        productRepository.save(new Product("Sneakers", 1299, 8, "Sneakers", "Footwear",
+                "https://images.unsplash.com/photo-1528701800489-20be3c6c2f87?w=400"));
+
+        productRepository.save(new Product("Sandals", 499, 15, "Sandals", "Footwear",
+                "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400"));
+
+        return "Sample products added";
+    }
+
+    // 🔍 DB Test
+    @GetMapping("/test-db")
+    public String testDB() {
         try {
-
-            productRepository.save(new Product("Running Shoes", 999, 10, "Shoes", "Footwear",
-                    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"));
-
-            productRepository.save(new Product("Sneakers", 1299, 8, "Sneakers", "Footwear",
-                    "https://images.unsplash.com/photo-1528701800489-20be3c6c2f87?w=400"));
-
-            productRepository.save(new Product("Sandals", 499, 15, "Sandals", "Footwear",
-                    "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400"));
-
-            return "Fresh products added";
-
+            productRepository.findAll();
+            return "DB Connected ✅";
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Error adding products";
+            return "DB NOT Connected ❌";
         }
     }
-
-    @GetMapping("/test-db")
-public String testDB() {
-    try {
-        productRepository.findAll();
-        return "DB Connected ✅";
-    } catch (Exception e) {
-        e.printStackTrace();
-        return "DB NOT Connected ❌";
-    }
-}
 }

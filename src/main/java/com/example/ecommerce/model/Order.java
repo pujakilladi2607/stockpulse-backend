@@ -14,8 +14,6 @@ public class Order {
     private List<OrderItem> items;
     private double totalAmount;
     private String status;
-
-    // ✅ ADD THESE
     private String userEmail;
     private String payment;
 
@@ -23,6 +21,11 @@ public class Order {
 
     public String getId() {
         return id;
+    }
+
+    // 🔥 ADD THIS (important for updates)
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<OrderItem> getItems() {
@@ -49,7 +52,6 @@ public class Order {
         this.status = status;
     }
 
-    // ✅ USER EMAIL
     public String getUserEmail() {
         return userEmail;
     }
@@ -58,7 +60,6 @@ public class Order {
         this.userEmail = userEmail;
     }
 
-    // ✅ PAYMENT
     public String getPayment() {
         return payment;
     }

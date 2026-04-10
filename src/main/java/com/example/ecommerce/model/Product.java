@@ -16,10 +16,8 @@ public class Product {
     private String category;
     private String image;
 
-    // ✅ Default constructor (required)
     public Product() {}
 
-    // ✅ Parameterized constructor
     public Product(String name, double price, int stock, String description, String category, String image) {
         this.name = name;
         this.price = price;
@@ -29,12 +27,11 @@ public class Product {
         this.image = image;
     }
 
-    // ✅ Getter for ID (IMPORTANT)
     public String getId() {
         return id;
     }
 
-    // ✅ Setter for ID (ADD THIS 🔥)
+    // ✅ keep this (important)
     public void setId(String id) {
         this.id = id;
     }
@@ -42,6 +39,7 @@ public class Product {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,6 +47,7 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -56,6 +55,7 @@ public class Product {
     public int getStock() {
         return stock;
     }
+
     public void setStock(int stock) {
         this.stock = stock;
     }
@@ -63,6 +63,7 @@ public class Product {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -70,6 +71,7 @@ public class Product {
     public String getCategory() {
         return category;
     }
+
     public void setCategory(String category) {
         this.category = category;
     }
@@ -77,6 +79,7 @@ public class Product {
     public String getImage() {
         return image;
     }
+
     public void setImage(String image) {
         this.image = image;
     }

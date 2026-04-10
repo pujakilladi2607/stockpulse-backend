@@ -14,7 +14,7 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    // ✅ Register (POST)
+    // ✅ Register
     @PostMapping("/register")
     public String register(@RequestBody User user) {
 
@@ -28,7 +28,7 @@ public class AuthController {
         return "User registered successfully";
     }
 
-    // ✅ Login (POST)
+    // ✅ Login
     @PostMapping("/login")
     public String login(@RequestBody User user) {
 
@@ -60,25 +60,25 @@ public class AuthController {
         return "Test user created";
     }
 
-    // 🔥 Create ADMIN USER
-   @GetMapping("/create-admin")
-public String createAdmin() {
+    // 🔥 Create ADMIN USER (FIXED)
+    @GetMapping("/create-admin")
+    public String createAdmin() {
 
-    // DELETE old admin if exists
-    User existing = userRepository.findByEmail("admin@gmail.com");
-    if (existing != null) {
-        userRepository.delete(existing);
+        String adminEmail = "stockpulseadmin@gmail.com";
+
+        User existing = userRepository.findByEmail(adminEmail);
+        if (existing != null) {
+            userRepository.delete(existing);
+        }
+
+        User user = new User();
+        user.setName("Admin");
+        user.setEmail(adminEmail);
+        user.setPassword("123456");
+        user.setAddress("India");
+
+        userRepository.save(user);
+
+        return "Admin created successfully";
     }
-
-    // CREATE new admin
-    User user = new User();
-    user.setName("Admin");
-    user.setEmail("stockpulseadmin@gmail.com");   // 👉 change if needed
-    user.setPassword("123456");         // 👉 change if needed
-    user.setAddress("India");
-
-    userRepository.save(user);
-
-    return "Old admin deleted (if existed) & new admin created";
-}
 }

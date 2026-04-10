@@ -8,6 +8,6 @@ class EcommerceApplicationTests {
 
     @Test
     void contextLoads() {
-        // This test will just check if Spring context loads successfully
+        // This test checks if application starts successfully
     }
 }
